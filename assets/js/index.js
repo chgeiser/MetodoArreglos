@@ -1,14 +1,15 @@
-
-
 const tareas = [];
-let idActual= 1;
-
+const contador = document.querySelector("#contador");
+const filtro = document.querySelector("#filtro");
+let idActual = 1;
 
 const dibujarTarea = function () {
   const ulListaTareas = document.querySelector("#listaTarea");
   let html = "";
   for (const elemento of tareas) {
-    html += `<li><button onClick="eliminarTarea(${tareas.id});" type="button">Eliminar</button>${elemento.descripcion}</li>`;
+    html += `<li><span>${elemento.Descripcion} - ${
+      elemento.Activo ? "Activo" : "Inactivo"}</span>
+      <button onClick="eliminarTarea(${elemento.id});" type="button">Eliminar</button><input type="checkbox" id="cbox1" value="first_checkbox" /></li>`;
   }
 
   ulListaTareas.innerHTML = html;
@@ -16,24 +17,46 @@ const dibujarTarea = function () {
 
 const agregarTarea = function () {
   const inputNuevaTarea = document.querySelector("#nuevaTarea");
-  const objNuevaTarea = {
-    id: idActual,
-    descripcion: inputNuevaTarea.value,
-    realizado: false,
-  };
-  idActual++;
+  if (!inputNuevaTarea.value.trim()) {
+    alert("no puedes agregar vacios");
+  }
+    const objNuevaTarea = {
+      id: idActual,
+      //id: tareas[tareas.length-1].id+1,
+      Descripcion: inputNuevaTarea.value,
+      Activo: false,
+    };
+
+    idActual++;
+  
 
   tareas.push(objNuevaTarea);
-  inputNuevaTarea.value="";
+  inputNuevaTarea.value = "";
+  console.log(tareas)
+  dibujarTarea();
+  contarTareas();
+};
+
+const eliminarTarea = function (eliminarTareaId) {
+  const index = tareas.findIndex((tarea) => tarea.id === eliminarTareaId);
+  //tareas = tareas.filter((tarea) => tarea.id !== eliminarTareaId);
+  tareas.splice(index, 1);
+  console.log(tareas);
+  dibujarTarea();
+  contarTareas();
+};
+
+const filtrarTarea = function () {
+  const filtrar = tareas.filter((tarea) => tarea.Activo === true);
+  tareas.splice(filtrar);
   dibujarTarea();
 };
 
-const eliminarTarea = function(eliminarTareaId){
-    const index = tareas.findIndex((tarea) => tarea.id === eliminarTareaId);
-    tareas.splice(index,1);
-    console.log(tareas)
-    dibujarTarea();
+const contarTareas = ()=> {
+    contador.innerHTML = tareas.length;
 }
+
+
 /*
 const personas = [
   { nombre: "Christopher", apellido: "Geiser" },
@@ -70,10 +93,6 @@ const eliminarPersona = function(personaEliminar){
     dibujarLista();
 }*/
 
-
-
-
-
 //dibujarLista();
 dibujarTarea();
 
@@ -82,6 +101,6 @@ dibujarTarea();
 console.log(index);
 personas.splice(index,1);
 
-console.log(personas)*/     
+console.log(personas)*/
 
 //dibujarLista();
