@@ -16,7 +16,7 @@ const tareas = [
     }
 ];
 const contador = document.querySelector("#contador");
-const filtro = document.querySelector("#filtro");
+const filtro = document.querySelector("#Realizada");
 
 const dibujarTarea = function () {
   const ulListaTareas = document.querySelector("#listaTarea");
