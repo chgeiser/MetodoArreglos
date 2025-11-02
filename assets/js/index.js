@@ -79,7 +79,7 @@ const contarTareas = ()=> {
     contador.innerHTML = tareas.length;
 }
 
-
+dibujarTarea();
 
 /*
 const personas = [
@@ -118,7 +118,7 @@ const eliminarPersona = function(personaEliminar){
 }*/
 
 //dibujarLista();
-dibujarTarea();
+
 
 //eliminar
 /*const index = personas.findIndex((personas) => personas.nombre ==="Christopher");
