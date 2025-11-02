@@ -1,17 +1,35 @@
-const tareas = [];
+const tareas = [
+    {
+        id: 1,
+        Descripcion: "Leer",
+        Activo: false
+    },
+    {
+        id: 2,
+        Descripcion: "Jugar",
+        Activo: false
+    },
+    {
+        id: 3,
+        Descripcion: "Conversar",
+        Activo: false
+    }
+];
 const contador = document.querySelector("#contador");
 const filtro = document.querySelector("#filtro");
-let idActual = 1;
 
 const dibujarTarea = function () {
   const ulListaTareas = document.querySelector("#listaTarea");
   let html = "";
   for (const elemento of tareas) {
-    html += `<li><span>${elemento.Descripcion} - ${
-      elemento.Activo ? "Activo" : "Inactivo"}</span>
-      <button onClick="eliminarTarea(${elemento.id});" type="button">Eliminar</button><input type="checkbox" id="cbox1" value="first_checkbox" /></li>`;
+    html += `<li><span>${elemento.id} - ${elemento.Descripcion} - ${elemento.Activo ? "Activo" : "Inactivo"}</span>
+      <button onClick="eliminarTarea(${elemento.id});" type="button">Eliminar</button><input type="checkbox" 
+  ${elemento.Activo ? "checked" : ""} 
+  onClick="actualizarEstadoById(${elemento.id});"
+/></li>`;
   }
 
+  contarTareas();
   ulListaTareas.innerHTML = html;
 };
 
@@ -21,14 +39,10 @@ const agregarTarea = function () {
     alert("no puedes agregar vacios");
   }
     const objNuevaTarea = {
-      id: idActual,
-      //id: tareas[tareas.length-1].id+1,
+      id: tareas[tareas.length-1].id+1,
       Descripcion: inputNuevaTarea.value,
       Activo: false,
     };
-
-    idActual++;
-  
 
   tareas.push(objNuevaTarea);
   inputNuevaTarea.value = "";
@@ -46,15 +60,25 @@ const eliminarTarea = function (eliminarTareaId) {
   contarTareas();
 };
 
+const actualizarEstadoById = function(id){
+  const index = tareas.find((tarea) => tarea.id === id);
+  index.Activo = !index.Activo;
+ 
+  dibujarTarea();
+  filtrarTarea();
+}
+
+
 const filtrarTarea = function () {
   const filtrar = tareas.filter((tarea) => tarea.Activo === true);
-  tareas.splice(filtrar);
+  filtro.innerHTML=filtrar.length;
   dibujarTarea();
 };
 
 const contarTareas = ()=> {
     contador.innerHTML = tareas.length;
 }
+
 
 
 /*
